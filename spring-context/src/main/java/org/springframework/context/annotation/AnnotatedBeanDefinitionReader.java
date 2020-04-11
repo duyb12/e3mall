@@ -250,17 +250,28 @@ public class AnnotatedBeanDefinitionReader {
 			@Nullable Class<? extends Annotation>[] qualifiers, @Nullable Supplier<T> supplier,
 			@Nullable BeanDefinitionCustomizer[] customizers) {
 
+		//初始化一个有注解的bean定义
+		//实现了AnnotatedBeanDefinition接口(ABD继承了BeanDefinition接口)，本质是BeanDefinition的实现类
 		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(beanClass);
+		//判断这个类是否需要跳过解析
+		//通过代码可以知道spring判断是否跳过解析，主要判断类有没有加注解
 		if (this.conditionEvaluator.shouldSkip(abd.getMetadata())) {
 			return;
 		}
 
 		abd.setInstanceSupplier(supplier);
+		//得到类的作用域
 		ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(abd);
+		//把作用域添加到abd中
 		abd.setScope(scopeMetadata.getScopeName());
+		//生成beanName，用户没定义的话，用beanName生成器生成
 		String beanName = (name != null ? name : this.beanNameGenerator.generateBeanName(abd, this.registry));
 
+		//处理类中的通用注解，看源码是Lazy DependsOn Primary Role Description注解
+		//处理完成后添加到abd中
 		AnnotationConfigUtils.processCommonDefinitionAnnotations(abd);
+		//如果向容器注册注解bean定义时，使用了额外的限定符注解则解析
+		//
 		if (qualifiers != null) {
 			for (Class<? extends Annotation> qualifier : qualifiers) {
 				if (Primary.class == qualifier) {
@@ -274,6 +285,7 @@ public class AnnotatedBeanDefinitionReader {
 				}
 			}
 		}
+		//自定义的注解
 		if (customizers != null) {
 			for (BeanDefinitionCustomizer customizer : customizers) {
 				customizer.customize(abd);
@@ -281,7 +293,9 @@ public class AnnotatedBeanDefinitionReader {
 		}
 
 		BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(abd, beanName);
+		//ScopedProxyMode needToAdd
 		definitionHolder = AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
+		//
 		BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);
 	}
 

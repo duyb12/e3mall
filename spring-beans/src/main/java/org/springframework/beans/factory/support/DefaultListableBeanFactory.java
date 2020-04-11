@@ -967,6 +967,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			}
 			else {
 				// Still in startup registration phase
+				// Map<String, BeanDefinition> beanDefinitionMap：维护了一个map
+				// List<String> beanDefinitionNames：维护了一个list
 				this.beanDefinitionMap.put(beanName, beanDefinition);
 				this.beanDefinitionNames.add(beanName);
 				removeManualSingletonName(beanName);

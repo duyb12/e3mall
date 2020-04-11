@@ -34,6 +34,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.StringValueResolver;
 
 /**
+ * 只重写了BeanPostProcessor接口的before方法（postProcessBeforeInitialization），*after*方法未重写（什么也没做）
  * {@link BeanPostProcessor} implementation that supplies the {@code ApplicationContext},
  * {@link org.springframework.core.env.Environment Environment}, or
  * {@link StringValueResolver} for the {@code ApplicationContext} to beans that
@@ -119,9 +120,13 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 		if (bean instanceof MessageSourceAware) {
 			((MessageSourceAware) bean).setMessageSource(this.applicationContext);
 		}
+		//spring帮我们set了一个applicationContext对象，
+		//所以当我们自己的类实现了ApplicationContextAware接口时，
+		//只需要setApplicationContext()就可以得到ApplicationContext对象
 		if (bean instanceof ApplicationContextAware) {
 			((ApplicationContextAware) bean).setApplicationContext(this.applicationContext);
 		}
 	}
+
 
 }

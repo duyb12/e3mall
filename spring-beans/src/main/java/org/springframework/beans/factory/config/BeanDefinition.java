@@ -23,6 +23,8 @@ import org.springframework.core.ResolvableType;
 import org.springframework.lang.Nullable;
 
 /**
+ * “bean定义”的实体类的接口（属性、方法）
+ * 类似实体类，只不过是个接口，需要其他实现类实现，定义了基本的属性和方法
  * A BeanDefinition describes a bean instance, which has property values,
  * constructor argument values, and further information supplied by
  * concrete implementations.
