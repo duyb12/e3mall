@@ -1,13 +1,10 @@
-package com.du.beanPostProcessor;
+package com.du.copy;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
@@ -22,13 +19,7 @@ public class TestBeanPostProcessor implements BeanPostProcessor, PriorityOrdered
 			System.out.println("postProcessBeforeInitialization");
 		}
 		//也可以返回代理对象
-		Object proxy = Proxy.newProxyInstance(bean.getClass().getClassLoader(), bean.getClass().getInterfaces(), new InvocationHandler() {
-			@Override
-			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-				//搜索return ReflectionUtils.invokeMethod查看样例
-				return ReflectionUtils.invokeMethod(method, bean, args);
-			}
-		});
+		Object proxy = Proxy.newProxyInstance(bean.getClass().getClassLoader(), bean.getClass().getInterfaces(), new MyInvocationHandler());
 		//return proxy;
 		return bean;
 	}

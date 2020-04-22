@@ -1,4 +1,4 @@
-package com.du.beanPostProcessor;
+package com.du.copy;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

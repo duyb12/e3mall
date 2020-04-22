@@ -6,7 +6,7 @@ import com.du.dao.IndexDaoImpl;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class test {
+public class TestApp {
 
 	//很重要的一个类 ConfigurationClassPostProcessor
 
@@ -23,7 +23,7 @@ public class test {
 	/**
 	 * 可以单个类注册，初始化不扫描包。后处理，需要手动refresh()
 	 */
-	@Test
+	@org.junit.Test
 	public void testSingleClassRegister() {
 		AnnotationConfigApplicationContext context =
 				new AnnotationConfigApplicationContext();
@@ -38,7 +38,7 @@ public class test {
 	 * 实现BeanPostProcessor对bean实例化过程进行控制（TestBeanPostProcessor），
 	 * 	可以实现PriorityOrdered实现getOrder()设置顺序
 	 */
-	@Test
+	@org.junit.Test
 	public void testBeanPostProcessor() {
 		//把spring所有的前提准备好
 		AnnotationConfigApplicationContext context =

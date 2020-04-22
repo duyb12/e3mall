@@ -1,7 +1,5 @@
-package com.du.beanFactoryPostProcessor;
+package com.du.copy;
 
-import com.du.dao.IndexDao;
-import com.du.dao.IndexDaoImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Component;
  * 得到AnnotatedBeanDefinition，设置scope
  */
 @Component
-public class TestbeanFactoryPostProcessor implements BeanFactoryPostProcessor {
+public class TestBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 		AnnotatedBeanDefinition abd = (AnnotatedBeanDefinition) beanFactory.getBeanDefinition("indexDaoImpl");
