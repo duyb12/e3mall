@@ -22,14 +22,14 @@ public class TestBeanPostProcessor implements BeanPostProcessor, PriorityOrdered
 			System.out.println("postProcessBeforeInitialization");
 		}
 		//也可以返回代理对象
-//		Object o = Proxy.newProxyInstance(bean.getClass().getClassLoader(), bean.getClass().getInterfaces(), new InvocationHandler() {
-//			@Override
-//			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-//				//搜索return ReflectionUtils.invokeMethod查看样例
-//				return ReflectionUtils.invokeMethod(method, bean, args);
-//			}
-//		});
-//		return o;
+		Object proxy = Proxy.newProxyInstance(bean.getClass().getClassLoader(), bean.getClass().getInterfaces(), new InvocationHandler() {
+			@Override
+			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+				//搜索return ReflectionUtils.invokeMethod查看样例
+				return ReflectionUtils.invokeMethod(method, bean, args);
+			}
+		});
+		//return proxy;
 		return bean;
 	}
 

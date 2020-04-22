@@ -128,5 +128,7 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 		}
 	}
 
+	//postProcessAfterInitialization方法空实现
+
 
 }

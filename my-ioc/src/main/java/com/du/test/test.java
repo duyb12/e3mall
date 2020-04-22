@@ -4,10 +4,12 @@ import com.du.config.AppConfig;
 import com.du.dao.IndexDao;
 import com.du.dao.IndexDaoImpl;
 import org.junit.Test;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class test {
+
+	//很重要的一个类 ConfigurationClassPostProcessor
+
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext context =
 				new AnnotationConfigApplicationContext(AppConfig.class);

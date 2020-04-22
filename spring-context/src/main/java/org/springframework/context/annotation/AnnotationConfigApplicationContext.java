@@ -59,26 +59,41 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 
 
 	/**
+	 * 无参构造
 	 * Create a new AnnotationConfigApplicationContext that needs to be populated
 	 * through {@link #register} calls and then manually {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigApplicationContext() {
 		//有注解的bean定义读取器  bean定义：BeanDefinition
 		this.reader = new AnnotatedBeanDefinitionReader(this);
+		//可以用来扫描包或类，继而转化为BeanDefinition
+		//但是实际上我们扫描包而不是scanner这个对象，是spring自己new了一个ClassPathBeanDefinitionScanner
+		//这里的scanner仅仅是为了程序员能在外部调用AnnotationConfigApplicationContext对象的scan()方法
+		//例如：AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+		//	   context.scan()
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
 
 	/**
+	 * beanFactory构造
 	 * Create a new AnnotationConfigApplicationContext with the given DefaultListableBeanFactory.
 	 * @param beanFactory the DefaultListableBeanFactory instance to use for this context
 	 */
 	public AnnotationConfigApplicationContext(DefaultListableBeanFactory beanFactory) {
+		//调用构造方法，此处先调用父类的构造方法，再调用自己的构造方法
 		super(beanFactory);
+		//有注解的bean定义读取器  bean定义：BeanDefinition
 		this.reader = new AnnotatedBeanDefinitionReader(this);
+		//可以用来扫描包或类，继而转化为BeanDefinition
+		//但是实际上我们扫描包而不是scanner这个对象，是spring自己new了一个ClassPathBeanDefinitionScanner
+		//这里的scanner仅仅是为了程序员能在外部调用AnnotationConfigApplicationContext对象的scan()方法
+		//例如：AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+		//	   context.scan()
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
 
 	/**
+	 * 类构造
 	 * Create a new AnnotationConfigApplicationContext, deriving bean definitions
 	 * from the given component classes and automatically refreshing the context.
 	 * @param componentClasses one or more component classes &mdash; for example,
@@ -87,11 +102,18 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	public AnnotationConfigApplicationContext(Class<?>... componentClasses) {
 		//调用默认无参的构造方法，此处先调用父类的构造方法，再调用自己的无参构造方法
 		this();
+		//
 		register(componentClasses);
+		//可以用来扫描包或类，继而转化为BeanDefinition
+		//但是实际上我们扫描包而不是scanner这个对象，是spring自己new了一个ClassPathBeanDefinitionScanner
+		//这里的scanner仅仅是为了程序员能在外部调用AnnotationConfigApplicationContext对象的scan()方法
+		//例如：AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+		//	   context.scan()
 		refresh();
 	}
 
 	/**
+	 * 包构造
 	 * Create a new AnnotationConfigApplicationContext, scanning for components
 	 * in the given packages, registering bean definitions for those components,
 	 * and automatically refreshing the context.
@@ -168,6 +190,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	}
 
 	/**
+	 * 扫描包
 	 * Perform a scan within the specified base packages.
 	 * <p>Note that {@link #refresh()} must be called in order for the context
 	 * to fully process the new classes.
